@@ -36,7 +36,7 @@ class HueReader
 
         $colors = [];
         for ($i = 0; $i < Hue::COLOR_LENGTH; $i++) {
-            $colors[$i] = $this->reader->readInt16() | 0x8000;
+            $colors[$i] = $this->reader->readInt16();
         }
 
         return new Hue($id, $colors);
