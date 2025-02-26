@@ -82,24 +82,27 @@ class PaperdollDrawer {
       return;
     }
 
-    if ($entry->isGump()) { // Male/Female Gumps or IsGump Param
+    // Male/Female Gumps or IsGump Param.
+    if ($entry->isGump()) {
       $gumpId = $index;
+      $this->loadRawGump($canvas, $gumpId, $entry->getHue());
+
+      return;
     }
-    else {
-      $itemData = $this->tileDataReader->readItemData($index);
 
-      if (!$itemData->isWearable()) {
-        return;
+    $itemData = $this->tileDataReader->readItemData($index);
+
+    if (!$itemData->isWearable()) {
+      return;
+    }
+
+    $gumpId = $itemData->value();
+    if ($gumpId < 10000) {
+      if ($entry->isFemale()) {
+        $gumpId += 60000;
       }
-
-      $gumpId = $itemData->value();
-      if ($gumpId < 10000) {
-        if ($entry->isFemale()) {
-          $gumpId += 60000;
-        }
-        else {
-          $gumpId += 50000;
-        }
+      else {
+        $gumpId += 50000;
       }
     }
 
