@@ -51,5 +51,5 @@ abstract class GumpEntry
     /**
      * @return bool
      */
-    public abstract function isGump(): bool;
+    abstract public function isGump(): bool;
 }

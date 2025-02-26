@@ -20,7 +20,7 @@ class BinaryFileReader
     public function open()
     {
         if (!$this->handle) {
-            $this->handle = fopen($this->path, 'r');
+            $this->handle = fopen($this->path, 'rb');
             if (!$this->handle) {
                 throw new IOException("Unable to open {$this->path}");
             }

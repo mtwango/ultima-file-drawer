@@ -16,7 +16,7 @@ class PaperdollBuilder
     }
 
     /** @var string */
-    private $name = '';
+    private $name;
 
     /** @var string */
     private $title = '';

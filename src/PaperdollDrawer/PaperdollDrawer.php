@@ -17,12 +17,12 @@ class PaperdollDrawer
     public static function with(string $mulPath): self
     {
         $mulPath = rtrim($mulPath, '/');
-        
+
         return new PaperdollDrawer(
-            new GumpIndexReader("{$mulPath}/gumpidx.mul"),
-            new GumpArtReader("{$mulPath}/gumpart.mul"),
-            new TileDataReader("{$mulPath}/tiledata.mul"),
-            new HueReader("{$mulPath}/hues.mul")
+            new GumpIndexReader("$mulPath/gumpidx.mul"),
+            new GumpArtReader("$mulPath/gumpart.mul"),
+            new TileDataReader("$mulPath/tiledata.mul"),
+            new HueReader("$mulPath/hues.mul")
         );
     }
 
@@ -89,19 +89,19 @@ class PaperdollDrawer
 
             if (!$itemData->isWearable()) {
                 return;
-            } else {
-                $gumpId = $itemData->value();
-                if ($gumpId < 10000) {
-                    if ($entry->isFemale()) {
-                        $gumpId += 60000;
-                    } else {
-                        $gumpId += 50000;
-                    }
-                }
             }
+
+          $gumpId = $itemData->value();
+          if ($gumpId < 10000) {
+              if ($entry->isFemale()) {
+                  $gumpId += 60000;
+              } else {
+                  $gumpId += 50000;
+              }
+          }
         }
 
-        $this->loadRawGump($canvas, intval($gumpId), $entry->getHue());
+        $this->loadRawGump($canvas, $gumpId, $entry->getHue());
     }
 
     private function loadRawGump(&$canvas, int $index, int $hueId)
@@ -117,12 +117,12 @@ class PaperdollDrawer
 
     private function addGump(&$canvas, $datum)
     {
-        $x = intval($datum[0]) + 8;
-        $y = intval($datum[1]) + 15;
-        $r = intval($datum[2]);
-        $g = intval($datum[3]);
-        $b = intval($datum[4]);
-        $length = intval($datum[5]); // pixel color repeat length
+        $x = (int) $datum[0] + 8;
+        $y = (int) $datum[1] + 15;
+        $r = (int) $datum[2];
+        $g = (int) $datum[3];
+        $b = (int) $datum[4];
+        $length = (int) $datum[5]; // pixel color repeat length
         if ($r || $g || $b) {
             $color = imagecolorallocate($canvas, $r, $g, $b);
             for ($i = 0; $i < $length; $i++) {

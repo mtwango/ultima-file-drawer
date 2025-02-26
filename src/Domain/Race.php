@@ -37,11 +37,11 @@ abstract class Race
     /**
      * @return int
      */
-    public abstract function getType();
+    abstract public function getType();
 
     /**
      * @param bool $female
      * @return int
      */
-    public abstract function getBodyId(bool $female): int;
+    abstract public function getBodyId(bool $female): int;
 }

@@ -31,7 +31,7 @@ class HueReader
         $id &= 0x7fff;
 
         $hueOffset = 4 + $id * 88;
-        $colorOffset = intval($id / 8) * 4;
+        $colorOffset = (int) ($id / 8) * 4;
         $this->reader->seek($hueOffset + $colorOffset, SEEK_SET);
 
         $colors = [];

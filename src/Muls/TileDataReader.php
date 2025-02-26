@@ -25,7 +25,7 @@ class TileDataReader
      */
     public function readItemData(int $index): ItemData
     {
-        $group = intval($index / 32);
+        $group = (int) ($index / 32);
         $groupIdx = $index % 32;
 
         $position = 493568 // Land data = 16384*30 (from bodys) +(16384/32)*4 (from headers)
