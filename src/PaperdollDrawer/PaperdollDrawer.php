@@ -7,6 +7,7 @@ use Ultima\Muls\GumpArtReader;
 use Ultima\Muls\GumpIndexReader;
 use Ultima\Muls\HueReader;
 use Ultima\Muls\TileDataReader;
+use Ultima\PaperdollDrawer\Entry\BodyEntry;
 use Ultima\PaperdollDrawer\Entry\GumpEntry;
 
 class PaperdollDrawer {
@@ -22,6 +23,11 @@ class PaperdollDrawer {
 
   /** @var HueReader */
   private $hueReader;
+
+  /**
+   * This bool is used to move pixels to center character in paperdoll.
+   */
+  private bool $gumpPositioned = FALSE;
 
   public function __construct(
     GumpIndexReader $gumpIndexReader,
@@ -57,19 +63,27 @@ class PaperdollDrawer {
    * @return resource
    */
   public function drawPaperdoll(Paperdoll $paperdoll) {
-    $canvas = imagecreatefrompng(__DIR__ . '/../../resource/paperdoll.png');
-    if (!$canvas) {
-      throw new RuntimeException('could not create paperdoll image');
-    }
+    // Create empty image.
+    $canvas = imagecreatetruecolor(262, 324);
+    // Replace default black background with transparent color.
+    imagesavealpha($canvas, TRUE);
+    $transparent = imagecolorallocatealpha($canvas, 0, 0, 0, 127);
+    imagefill($canvas, 0, 0, $transparent);
 
-    imagealphablending($canvas, TRUE);
+    // Insert paperdoll background.
+    $this->addEntry($canvas, new BodyEntry(0x7d1, 0, FALSE));
 
+    $this->gumpPositioned = TRUE;
+
+    // Insert character body.
     $this->addEntry($canvas, $paperdoll->getBodyEntry());
 
+    // Add items.
     foreach ($paperdoll->getItemEntries() as $entry) {
       $this->addEntry($canvas, $entry);
     }
 
+    // Add name and title.
     $this->addText($canvas, $paperdoll->getName(), 266);
     $this->addText($canvas, $paperdoll->getTitle(), 283);
 
@@ -120,12 +134,19 @@ class PaperdollDrawer {
   }
 
   private function addGump($canvas, $datum) {
-    $x = (int) $datum[0] + 8;
-    $y = (int) $datum[1] + 15;
+    $x = (int) $datum[0];
+    $y = (int) $datum[1];
     $r = (int) $datum[2];
     $g = (int) $datum[3];
     $b = (int) $datum[4];
     $length = (int) $datum[5]; // pixel color repeat length
+
+    // Center character in gump window.
+    if ($this->gumpPositioned) {
+      $x += 8;
+      $y += 15;
+    }
+
     if ($r || $g || $b) {
       $color = imagecolorallocate($canvas, $r, $g, $b);
       for ($i = 0; $i < $length; $i++) {
