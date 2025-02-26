@@ -5,63 +5,66 @@ namespace Ultima\PaperdollDrawer;
 use Ultima\PaperdollDrawer\Entry\BodyEntry;
 use Ultima\PaperdollDrawer\Entry\ItemEntry;
 
-class Paperdoll
-{
-    /** @var string */
-    private $name;
+class Paperdoll {
 
-    /** @var string */
-    private $title;
+  /** @var string */
+  private $name;
 
-    /** @var BodyEntry */
-    private $bodyEntry;
+  /** @var string */
+  private $title;
 
-    /** @var ItemEntry[] */
-    private $itemEntries;
+  /** @var BodyEntry */
+  private $bodyEntry;
 
-    /**
-     * Paperdoll constructor.
-     * @param string $name
-     * @param string $title
-     * @param BodyEntry $bodyEntry
-     * @param ItemEntry[] $itemEntries
-     */
-    public function __construct(string $name, string $title, BodyEntry $bodyEntry, array $itemEntries)
-    {
-        $this->name = $name;
-        $this->title = $title;
-        $this->bodyEntry = $bodyEntry;
-        $this->itemEntries = $itemEntries;
-    }
+  /** @var ItemEntry[] */
+  private $itemEntries;
 
-    /**
-     * @return string
-     */
-    public function getName(): string
-    {
-        return $this->name;
-    }
+  /**
+   * Paperdoll constructor.
+   *
+   * @param string $name
+   * @param string $title
+   * @param BodyEntry $bodyEntry
+   * @param ItemEntry[] $itemEntries
+   */
+  public function __construct(
+    string $name,
+    string $title,
+    BodyEntry $bodyEntry,
+    array $itemEntries
+  ) {
+    $this->name = $name;
+    $this->title = $title;
+    $this->bodyEntry = $bodyEntry;
+    $this->itemEntries = $itemEntries;
+  }
 
-    /**
-     * @return string
-     */
-    public function getTitle(): string
-    {
-        return $this->title;
-    }
+  /**
+   * @return string
+   */
+  public function getName(): string {
+    return $this->name;
+  }
 
-    /**
-     * @return BodyEntry
-     */
-    public function getBodyEntry(): BodyEntry
-    {
-        return $this->bodyEntry;
-    }
-    /**
-     * @return ItemEntry[]
-     */
-    public function getItemEntries(): array
-    {
-        return $this->itemEntries;
-    }
+  /**
+   * @return string
+   */
+  public function getTitle(): string {
+    return $this->title;
+  }
+
+  /**
+   * @return BodyEntry
+   */
+  public function getBodyEntry(): BodyEntry {
+    return $this->bodyEntry;
+  }
+
+  /**
+   * @return ItemEntry[]
+   */
+  public function getItemEntries(): array {
+    return $this->itemEntries;
+  }
+
 }

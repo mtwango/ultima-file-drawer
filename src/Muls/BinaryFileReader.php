@@ -4,89 +4,84 @@ namespace Ultima\Muls;
 
 use Ultima\Muls\Exception\IOException;
 
-class BinaryFileReader
-{
-    private $path;
-    private $handle;
+class BinaryFileReader {
 
-    public function __construct($path)
-    {
-        $this->path = $path;
-    }
+  private $path;
 
-    /**
-     * @throws IOException
-     */
-    public function open()
-    {
-        if (!$this->handle) {
-            $this->handle = fopen($this->path, 'rb');
-            if (!$this->handle) {
-                throw new IOException("Unable to open {$this->path}");
-            }
-        }
-    }
+  private $handle;
 
-    /**
-     * @return int
-     * @throws IOException
-     */
-    public function readInt16(): int
-    {
-        return (int)$this->readBigToLittleEndian(2);
-    }
+  public function __construct($path) {
+    $this->path = $path;
+  }
 
-    /**
-     * @return int
-     * @throws IOException
-     */
-    public function readInt32(): int
-    {
-        return (int)$this->readBigToLittleEndian(4);
+  /**
+   * @throws IOException
+   */
+  public function open() {
+    if (!$this->handle) {
+      $this->handle = fopen($this->path, 'rb');
+      if (!$this->handle) {
+        throw new IOException("Unable to open {$this->path}");
+      }
     }
+  }
 
-    /**
-     * @param int $length
-     * @return array|string
-     * @throws IOException
-     */
-    public function readBigToLittleEndian(int $length)
-    {
-        if (($val = fread($this->handle, $length)) === false) {
-            throw new IOException("Error while reading $length bytes from file {$this->path}");
-        }
-        switch ($length) {
-            case 4:
-                $val = unpack('l', $val);
-                break;
-            case 2:
-                $val = unpack('s', $val);
-                break;
-            case 1:
-                $val = unpack('c', $val);
-                break;
-            default:
-                $val = unpack('l*', $val);
-                return $val;
-        }
-        return ($val[1]);
-    }
+  /**
+   * @return int
+   * @throws IOException
+   */
+  public function readInt16(): int {
+    return (int) $this->readBigToLittleEndian(2);
+  }
 
-    public function seek($offset, $whence)
-    {
-        return fseek($this->handle, $offset, $whence);
+  /**
+   * @param int $length
+   *
+   * @return array|string
+   * @throws IOException
+   */
+  public function readBigToLittleEndian(int $length) {
+    if (($val = fread($this->handle, $length)) === FALSE) {
+      throw new IOException("Error while reading $length bytes from file {$this->path}");
     }
+    switch ($length) {
+      case 4:
+        $val = unpack('l', $val);
+        break;
+      case 2:
+        $val = unpack('s', $val);
+        break;
+      case 1:
+        $val = unpack('c', $val);
+        break;
+      default:
+        $val = unpack('l*', $val);
+        return $val;
+    }
+    return ($val[1]);
+  }
 
-    public function eof()
-    {
-        return feof($this->handle);
-    }
+  /**
+   * @return int
+   * @throws IOException
+   */
+  public function readInt32(): int {
+    return (int) $this->readBigToLittleEndian(4);
+  }
 
-    public function close()
-    {
-        if ($this->handle) {
-            fclose($this->handle);
-            $this->handle = null;
-        }
+  public function seek($offset, $whence) {
+    return fseek($this->handle, $offset, $whence);
+  }
+
+  public function eof() {
+    return feof($this->handle);
+  }
+
+  public function close() {
+    if ($this->handle) {
+      fclose($this->handle);
+      $this->handle = NULL;
     }
+  }
+
 }

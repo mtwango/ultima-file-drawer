@@ -2,47 +2,46 @@
 
 namespace Ultima\Muls;
 
-class ItemData
-{
-    /** @var int */
-    private $flags;
+class ItemData {
 
-    /** @var int */
-    private $value;
+  /** @var int */
+  private $flags;
 
-    /**
-     * ItemData constructor.
-     * @param int $flags
-     * @param int $value
-     */
-    public function __construct(int $flags, int $value)
-    {
-        $this->flags = $flags;
-        $this->value = $value;
-    }
+  /** @var int */
+  private $value;
 
-    /**
-     * @return int
-     */
-    public function value(): int
-    {
-        return $this->value;
-    }
+  /**
+   * ItemData constructor.
+   *
+   * @param int $flags
+   * @param int $value
+   */
+  public function __construct(int $flags, int $value) {
+    $this->flags = $flags;
+    $this->value = $value;
+  }
 
-    /**
-     * @param int $flag
-     * @return bool
-     */
-    public function hasFlag(int $flag): bool
-    {
-        return $this->flags & $flag;
-    }
+  /**
+   * @return int
+   */
+  public function value(): int {
+    return $this->value;
+  }
 
-    /**
-     * @return bool
-     */
-    public function isWearable(): bool
-    {
-        return $this->hasFlag(TileFlag::WEARABLE);
-    }
+  /**
+   * @return bool
+   */
+  public function isWearable(): bool {
+    return $this->hasFlag(TileFlag::WEARABLE);
+  }
+
+  /**
+   * @param int $flag
+   *
+   * @return bool
+   */
+  public function hasFlag(int $flag): bool {
+    return $this->flags & $flag;
+  }
+
 }

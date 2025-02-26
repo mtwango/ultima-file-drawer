@@ -2,6 +2,8 @@
 
 namespace Ultima\Muls\Exception;
 
-class IOException extends \Exception
-{
+use Exception;
+
+class IOException extends Exception {
+
 }
