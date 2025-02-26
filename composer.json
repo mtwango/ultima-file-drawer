@@ -4,17 +4,12 @@
   "description": "Library to generate images from Ultima Online files",
   "keywords": ["ultima online", "ultima", "paperdoll"],
   "license": "GPL-3.0+",
-  "require-dev": {
-    "phpunit/phpunit": "^12.0"
-  },
   "autoload": {
     "psr-4": {
       "Ultima\\": "src/"
     }
   },
-  "autoload-dev": {
-    "psr-4": {
-      "Ultima\\Tests\\": "tests/"
-    }
+  "require": {
+    "ext-gd": "*"
   }
 }
