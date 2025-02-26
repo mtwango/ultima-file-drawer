@@ -84,8 +84,8 @@ class PaperdollDrawer {
     }
 
     // Add name and title.
-    $this->addText($canvas, $paperdoll->getName(), 266);
-    $this->addText($canvas, $paperdoll->getTitle(), 283);
+    $this->addText($canvas, $paperdoll->getName(), 277);
+    $this->addText($canvas, $paperdoll->getTitle(), 295);
 
     return $canvas;
   }
@@ -156,12 +156,10 @@ class PaperdollDrawer {
   }
 
   private function addText($canvas, $text, $y) {
-    $textColor = imagecolorallocate($canvas, 0, 0, 0);
-    $pos = (int) (131 - (strlen($text) * 3.5));
-    if ($pos < 0) {
-      $pos = 0;
-    }
-    imagestring($canvas, 3, $pos, $y, $text, $textColor);
+    $textColor = imagecolorallocate($canvas, 25, 25, 25);
+    $pos = 40;
+
+    imagefttext($canvas, 10, 0, $pos, $y, $textColor, __DIR__ . '/../../fonts/uo-classic_v0.2.ttf', $text);
   }
 
 }
