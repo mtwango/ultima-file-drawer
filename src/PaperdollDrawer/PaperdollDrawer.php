@@ -76,7 +76,7 @@ class PaperdollDrawer {
     return $canvas;
   }
 
-  private function addEntry(&$canvas, GumpEntry $entry) {
+  private function addEntry($canvas, GumpEntry $entry) {
     $index = $entry->getIndex();
     if ($index > 0xFFFF || $index <= 0) {
       return;
@@ -109,7 +109,7 @@ class PaperdollDrawer {
     $this->loadRawGump($canvas, $gumpId, $entry->getHue());
   }
 
-  private function loadRawGump(&$canvas, int $index, int $hueId) {
+  private function loadRawGump($canvas, int $index, int $hueId) {
     $hue = ($hueId > 0) ? $this->hueReader->readHue($hueId) : NULL;
     $gumpData = $this->gumpIndexReader->readGumpData($index);
     $data = $this->gumpArtReader->readGump($gumpData, $hue);
@@ -119,7 +119,7 @@ class PaperdollDrawer {
     }
   }
 
-  private function addGump(&$canvas, $datum) {
+  private function addGump($canvas, $datum) {
     $x = (int) $datum[0] + 8;
     $y = (int) $datum[1] + 15;
     $r = (int) $datum[2];
@@ -134,7 +134,7 @@ class PaperdollDrawer {
     }
   }
 
-  private function addText(&$canvas, $text, $y) {
+  private function addText($canvas, $text, $y) {
     $textColor = imagecolorallocate($canvas, 0, 0, 0);
     $pos = (int) (131 - (strlen($text) * 3.5));
     if ($pos < 0) {
